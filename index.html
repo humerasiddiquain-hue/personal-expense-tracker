@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A beginner-friendly personal expense tracker built with HTML, CSS and JavaScript.">
+  <title>SpendWise — Personal Expense Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="SpendWise home">
+        <span class="brand-mark">S</span><span>spendwise</span>
+      </a>
+      <div class="side-label">MENU</div>
+      <a class="nav-link active" href="#overview"><span>▦</span> Overview</a>
+      <a class="nav-link" href="#transactions"><span>↕</span> Transactions</a>
+      <div class="sidebar-note">
+        <div class="note-icon">✦</div>
+        <strong>Small steps add up.</strong>
+        <p>Keep an eye on your spending and make your money work smarter.</p>
+      </div>
+      <div class="profile">
+        <div class="avatar">👤</div>
+        <div><strong>My Wallet</strong><small>Personal account</small></div>
+      </div>
+    </aside>
+
+    <main class="main-content" id="overview">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow" id="today-label">YOUR MONEY, IN FOCUS</p>
+          <h1>Good day! <span class="wave">✦</span></h1>
+          <p class="subheading">Here’s what’s happening with your money.</p>
+        </div>
+        <div class="top-actions">
+          <span class="date-chip" id="current-date"></span>
+          <button class="primary-btn" id="open-form-btn">＋ Add transaction</button>
+        </div>
+      </header>
+
+      <section class="summary-grid" aria-label="Financial summary">
+        <article class="summary-card balance-card">
+          <div class="card-top"><span>Total balance</span><span class="card-icon">◈</span></div>
+          <div class="amount" id="balance-total">₹0.00</div>
+          <div class="card-foot"><span class="status-dot"></span> Your available balance</div>
+        </article>
+        <article class="summary-card">
+          <div class="card-top"><span>Total income</span><span class="card-icon income-icon">↗</span></div>
+          <div class="amount" id="income-total">₹0.00</div>
+          <div class="card-foot muted">Money received</div>
+        </article>
+        <article class="summary-card">
+          <div class="card-top"><span>Total expenses</span><span class="card-icon expense-icon">↘</span></div>
+          <div class="amount" id="expense-total">₹0.00</div>
+          <div class="card-foot muted">Money spent</div>
+        </article>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel spending-panel">
+          <div class="panel-heading">
+            <div><p class="eyebrow">YOUR ACTIVITY</p><h2>Spending overview</h2></div>
+            <span class="soft-pill">By category</span>
+          </div>
+          <div id="category-chart" class="category-chart">
+            <div class="empty-chart">Add an expense to see your spending breakdown.</div>
+          </div>
+          <div id="category-legend" class="category-legend"></div>
+        </article>
+
+        <article class="panel quick-panel">
+          <div class="panel-heading">
+            <div><p class="eyebrow">QUICK INSIGHT</p><h2>Money snapshot</h2></div>
+            <span class="sparkle">✧</span>
+          </div>
+          <div class="insight-circle"><span>₹</span></div>
+          <p class="insight-title" id="insight-title">Your journey starts here</p>
+          <p class="insight-copy" id="insight-copy">Add your first transaction to get a simple snapshot of your finances.</p>
+          <div class="insight-bottom"><span>Transactions recorded</span><strong id="transaction-count">0</strong></div>
+        </article>
+      </section>
+
+      <section class="panel transactions-panel" id="transactions">
+        <div class="panel-heading transactions-heading">
+          <div><p class="eyebrow">RECORDS</p><h2>Recent transactions</h2></div>
+          <div class="transaction-tools">
+            <input type="search" id="search-input" placeholder="Search transactions..." aria-label="Search transactions">
+            <select id="type-filter" aria-label="Filter transactions">
+              <option value="all">All types</option>
+              <option value="income">Income</option>
+              <option value="expense">Expenses</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>TRANSACTION</th><th>CATEGORY</th><th>DATE</th><th>AMOUNT</th><th></th></tr></thead>
+            <tbody id="transaction-list">
+              <tr class="empty-row"><td colspan="5"><div class="empty-state"><span>✧</span><strong>No transactions yet</strong><p>Add your income or first expense to get started.</p></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <footer>Made with <span>♥</span> for smarter money habits · SpendWise</footer>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="modal-backdrop" aria-hidden="true">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="form-title">
+      <div class="modal-heading"><div><p class="eyebrow">NEW RECORD</p><h2 id="form-title">Add transaction</h2></div><button class="close-btn" id="close-form-btn" aria-label="Close">×</button></div>
+      <form id="transaction-form">
+        <label>Transaction type</label>
+        <div class="type-toggle">
+          <label class="type-option"><input type="radio" name="type" value="expense" checked><span>↘ Expense</span></label>
+          <label class="type-option"><input type="radio" name="type" value="income"><span>↗ Income</span></label>
+        </div>
+        <label for="title">Description</label>
+        <input id="title" name="title" type="text" placeholder="e.g. Lunch, part-time job" maxlength="45" required>
+        <div class="form-row">
+          <div><label for="amount">Amount (₹)</label><input id="amount" name="amount" type="number" min="0.01" step="0.01" placeholder="0.00" required></div>
+          <div><label for="category">Category</label><select id="category" name="category"></select></div>
+        </div>
+        <label for="date">Date</label>
+        <input id="date" name="date" type="date" required>
+        <p class="form-error" id="form-error" role="alert"></p>
+        <button class="primary-btn submit-btn" type="submit">Save transaction <span>→</span></button>
+      </form>
+    </section>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
